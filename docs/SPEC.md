@@ -80,6 +80,23 @@ Platforms load it at configuration time, not per request. Rotation: publish the
 new key alongside the old for at least one maximum lifetime (24 h), then drop
 the old one.
 
+## Door document
+
+A platform that accepts permits says so at `/.well-known/agent-permit.json`, so an
+agent can learn the door's language without a human reading docs:
+
+```json
+{"awpermit": 1, "door": "shop.example.com", "header": "Agent-Permit",
+ "actions": {"purchase": {"request": "POST https://shop.example.com/checkout",
+                          "spend": "price in minor units, checked against the cap"}},
+ "issuers": [{"issuer": "id.example.com",
+              "keyset": "https://id.example.com/.well-known/awpermit.json",
+              "mint": "POST https://id.example.com/permits"}]}
+```
+
+`door` is the `aud` a permit for this platform must carry; `actions` are exactly
+the scopes it enforces; `issuers` are the only issuers it trusts.
+
 ## Not in v1
 
 - **Proof of possession.** A permit is a bearer token; theft is bounded by TTL,
