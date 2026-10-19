@@ -64,6 +64,27 @@ def _cmd_verify(a: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_request(a: argparse.Namespace) -> int:
+    from .request import RequestFailed, request_permit, save_permit
+
+    try:
+        out = request_permit(a.door, agent_id=a.agent, scope=a.scope, per_tx=a.per_tx,
+                             total=a.total, ttl=int(a.ttl))
+    except RequestFailed as exc:
+        print(f"could not judge: {exc}", file=sys.stderr)
+        return 2
+    if out.get("status") != "approved" or not out.get("permit"):
+        print(f"NOT GRANTED: {out.get('status')}")
+        return 1
+    if a.out:
+        save_permit(out["permit"], a.out)
+        print(f"GRANTED: permit saved to {a.out} (mode 600); send it as "
+              f"{out.get('header', 'Agent-Permit')}: <permit>")
+    else:
+        print(out["permit"])
+    return 0
+
+
 def main(argv: Optional[list[str]] = None) -> int:
     p = argparse.ArgumentParser(prog="awpermit", description=__doc__)
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -99,6 +120,16 @@ def main(argv: Optional[list[str]] = None) -> int:
     v.add_argument("--amount", type=int)
     v.add_argument("--currency")
     v.set_defaults(fn=_cmd_verify)
+
+    r = sub.add_parser("request", help="ask a door's issuer for a permit; your human approves")
+    r.add_argument("door", help="the door host, e.g. shop.example.com")
+    r.add_argument("--agent", required=True, help="this agent's id")
+    r.add_argument("--scope", required=True, action="append", help="repeatable")
+    r.add_argument("--per-tx", type=int, help="per-purchase cap, minor units")
+    r.add_argument("--total", type=int, help="total cap, minor units")
+    r.add_argument("--ttl", type=float, default=900.0)
+    r.add_argument("--out", help="save the permit here (mode 600) instead of printing it")
+    r.set_defaults(fn=_cmd_request)
 
     a = p.parse_args(argv)
     try:

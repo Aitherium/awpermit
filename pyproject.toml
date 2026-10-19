@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "awpermit"
-version = "0.1.0"
+version = "0.2.0"
 description = "Let an agent through your door with a scope, a spend cap, and someone accountable — Ed25519 permits a platform verifies offline."
 readme = "README.md"
 requires-python = ">=3.10"

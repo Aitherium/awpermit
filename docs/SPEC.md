@@ -91,11 +91,30 @@ agent can learn the door's language without a human reading docs:
                           "spend": "price in minor units, checked against the cap"}},
  "issuers": [{"issuer": "id.example.com",
               "keyset": "https://id.example.com/.well-known/awpermit.json",
-              "mint": "POST https://id.example.com/permits"}]}
+              "mint": "POST https://id.example.com/permits",
+              "request": "POST https://id.example.com/permits/requests"}]}
 ```
 
 `door` is the `aud` a permit for this platform must carry; `actions` are exactly
 the scopes it enforces; `issuers` are the only issuers it trusts.
+
+## Permit request (an agent with no session)
+
+An agent cannot mint: the permit makes its human accountable, so the human decides.
+The issuer named in a door document may offer `request`:
+
+1. `POST <request>` `{"agent_id", "aud", "scope", "per_tx_cents", "total_cents",
+   "ttl_seconds"}` -> `{"request_id", "user_code", "approve_url", "poll_url",
+   "poll_token", "interval", "expires_in"}`. The issuer validates the grant exactly as
+   it would a mint, so a human is never shown something it would refuse.
+2. The agent shows its human `approve_url` and `user_code`. The human, signed in to the
+   issuer, sees the agent, the door, the actions and the cap, and approves or denies.
+3. The agent polls `GET <poll_url>?poll_token=...` every `interval` seconds:
+   `pending` · `denied` · `expired` · `approved` (with `permit`, returned ONCE) ·
+   `collected` (already returned).
+
+The poll token is the only way to collect the permit; the approve link alone is not.
+`awpermit request <door> --agent <id> --scope <action>` runs the whole flow.
 
 ## Not in v1
 
