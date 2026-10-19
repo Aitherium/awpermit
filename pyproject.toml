@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "awpermit"
+version = "0.1.0"
+description = "Let an agent through your door with a scope, a spend cap, and someone accountable — Ed25519 permits a platform verifies offline."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+dependencies = [
+    # Hard, not optional: a permit verified by a third party must be asymmetric.
+    # There is no HMAC fallback to degrade to.
+    "cryptography>=41.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+awpermit = "awpermit.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Aitherium/awpermit"
+Repository = "https://github.com/Aitherium/awpermit.git"
+Issues = "https://github.com/Aitherium/awpermit/issues"
+
+[tool.setuptools]
+packages = ["awpermit"]
+license-files = ["LICENSE"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
