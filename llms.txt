@@ -1,0 +1,30 @@
+# awpermit
+
+> Let an agent through your door with a scope, a spend cap, and someone accountable.
+
+Platforms block agents even when they identify themselves, because an admitted agent is unbounded: nothing says what it may do, for whom, or who pays when a web page talks it into something.
+
+## Install
+
+```
+pip install git+https://github.com/Aitherium/awpermit
+```
+
+## Use it in 30 seconds
+
+Mint a permit with a spend cap and watch the platform refuse the purchase over it.
+
+## Composes with
+
+- [awnest](https://aitherium.github.io/awnest/) — Prove there is a human before you let them into the nest.
+- [awdit](https://aitherium.github.io/awdit/) — An append-only audit trail whose gaps are DETECTABLE.
+- [awbac](https://aitherium.github.io/awbac/) — Role-based access control that fails closed and explains itself.
+- [awseal](https://aitherium.github.io/awseal/) — Sign an artifact so a stranger can verify it.
+
+## Where it lives
+
+- Repo: https://github.com/Aitherium/awpermit
+
+This repository is mirrored from the AitherOS monorepo by `.github/workflows/sync-awpermit.yml`; hand edits made here are overwritten on the next sync — change the source instead.
+
+Everything Aitherium, in one file for agents: https://aitherium.com/llms.txt

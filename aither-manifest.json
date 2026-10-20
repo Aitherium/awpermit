@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1",
+  "name": "awpermit",
+  "description": "Let an agent through your door with a scope, a spend cap, and someone accountable.",
+  "url": "https://aitherium.github.io/awpermit/",
+  "repository": "https://github.com/Aitherium/awpermit",
+  "kind": "tool",
+  "status": "no-pages",
+  "adopt": "Mint a permit with a spend cap and watch the platform refuse the purchase over it.",
+  "pairs_with": [
+    "awnest",
+    "awdit",
+    "awbac",
+    "awseal"
+  ],
+  "includes": [],
+  "metrics": {
+    "files": {
+      "value": 12,
+      "as_of": "2026-10-18T19:50:05-07:00"
+    },
+    "tests": {
+      "value": 2,
+      "as_of": "2026-10-18T19:50:05-07:00"
+    }
+  }
+}
