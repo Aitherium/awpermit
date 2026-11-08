@@ -24,6 +24,8 @@ Mint a permit with a spend cap and watch the platform refuse the purchase over i
 ## Where it lives
 
 - Repo: https://github.com/Aitherium/awpermit
+- Docs: https://aitherium.github.io/awpermit/
+- Manifest (keys + the one-line adoption story): https://aitherium.github.io/awpermit/aither-manifest.json
 
 This repository is mirrored from the AitherOS monorepo by `.github/workflows/sync-awpermit.yml`; hand edits made here are overwritten on the next sync — change the source instead.
 
